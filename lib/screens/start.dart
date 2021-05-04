@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forrira/screens/auth_screen.dart';
-import 'package:forrira/screens/visit_screen.dart';
+import 'package:forrira/screens/homey_screen.dart';
 
 class Start extends StatefulWidget {
   Start({Key key}) : super(key: key);
@@ -28,7 +28,7 @@ class _Start extends State<Start> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
 
-    final mediaQuery = MediaQuery.of(context);
+    // final mediaQuery = MediaQuery.of(context);
 
     return Scaffold(
       body: DefaultTabController(
@@ -47,14 +47,14 @@ class _Start extends State<Start> with SingleTickerProviderStateMixin {
             PageOneScreen(
               controller: tabController,
               url:
-                  'https://pomokata.com/wp-content/uploads/2019/07/pomodoro-delivery-logo.png',
+                  'https://im.whatshot.in/img/2020/Apr/graboxcropped-1586418757-1587568805-1588243758.jpg',
               text: 'delivery service',
               nm: 2,
             ),
             PageOneScreen(
               controller: tabController,
               url:
-                  'https://im.whatshot.in/img/2020/Apr/graboxcropped-1586418757-1587568805-1588243758.jpg',
+                  'https://pomokata.com/wp-content/uploads/2019/07/pomodoro-delivery-logo.png',
               text: 'high quality products',
               nm: 3,
             ),
@@ -101,27 +101,29 @@ class _PageOneScreenState extends State<PageOneScreen> {
           ),
         ),
         Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 350,
-                child: Image.network(widget.url),
-              ),
-              Text(
-                widget.text,
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.blueGrey,
-                    fontWeight: FontWeight.bold),
-              ),
-              TabPageSelector(
-                color: Colors.white,
-                selectedColor: Colors.green,
-                indicatorSize: 15,
-                controller: tabController,
-              ),
-            ],
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 350,
+                  child: Image.network(widget.url),
+                ),
+                Text(
+                  widget.text,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blueGrey,
+                      fontWeight: FontWeight.bold),
+                ),
+                TabPageSelector(
+                  color: Colors.white,
+                  selectedColor: Colors.green,
+                  indicatorSize: 15,
+                  controller: tabController,
+                ),
+              ],
+            ),
           ),
         ), ////////////////////////first
         if (widget.nm == 1)
@@ -205,7 +207,7 @@ class _PageOneScreenState extends State<PageOneScreen> {
               FlatButton(
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 onPressed: () {
-                  Navigator.of(context).pushNamed(VisitScreen.routeName);
+                  Navigator.of(context).pushNamed(HomeyScreen.routeName);
                 },
                 child: Text(
                   'vist first',

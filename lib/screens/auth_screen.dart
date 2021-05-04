@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:animated_button/animated_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:forrira/models/http_exception.dart';
@@ -23,8 +24,8 @@ class AuthScreen extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
-                  Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
+                  Color.fromRGBO(255, 215, 0, 1).withOpacity(0.5),
+                  Color.fromRGBO(75, 100, 117, 1).withOpacity(0.9),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -56,7 +57,8 @@ class AuthScreen extends StatelessWidget {
 
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(40),
-                          color: Colors.green,
+                          color: Colors.teal,
+                          // Color.fromRGBO(101, 111, 188, 1).withOpacity(.5),
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 8,
@@ -71,10 +73,11 @@ class AuthScreen extends StatelessWidget {
                             style: TextStyle(
                               color:
                                   // ignore: deprecated_member_use
-                                  Theme.of(context).accentTextTheme.title.color,
-                              fontSize: 50,
+                                  Colors.amber,
+                              fontSize: 100,
                               fontFamily: 'Anton',
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 10,
                             ),
                           ),
                         ),
@@ -89,13 +92,13 @@ class AuthScreen extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 30),
-            child: IconButton(
-                icon: Icon(Icons.keyboard_return),
-                color: Colors.pink,
-                onPressed: () => Navigator.of(context).pop()),
-          )
+          // Container(
+          //   margin: EdgeInsets.only(top: 30),
+          //   child: IconButton(
+          //       icon: Icon(Icons.keyboard_return),
+          //       color: Colors.pink,
+          //       onPressed: () => Navigator.of(context).pop()),
+          // )
         ],
       ),
     );
@@ -162,6 +165,11 @@ class _AuthCardState extends State<AuthCard>
       ),
     );
   }
+
+  // void toLogoutAutomatic(BuildContext ctx) {
+  //   Provider.of<Auth>(ctx).autoLogout();
+  //   Navigator.of(ctx).pushReplacementNamed(AuthScreen.routeName);
+  // }
 
   Future<void> _submit() async {
     if (!_formKey.currentState.validate()) {
@@ -237,6 +245,7 @@ class _AuthCardState extends State<AuthCard>
       ),
       elevation: 8.0,
       child: AnimatedContainer(
+        color: Colors.white38,
         curve: Curves.easeIn,
         duration: Duration(milliseconds: 300),
         height: _authMode == AuthMode.Signup ? 330 : 280,
@@ -326,22 +335,32 @@ class _AuthCardState extends State<AuthCard>
                   CircularProgressIndicator()
                 else
                   // ignore: deprecated_member_use
-                  RaisedButton(
-                    child:
-                        Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
-                    onPressed: _submit,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                  AnimatedButton(
+                    child: Text(
+                      _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP',
+                      style: TextStyle(
+                          color: Colors.amber, fontWeight: FontWeight.bold),
                     ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                    color: Theme.of(context).primaryColor,
-                    textColor: Theme.of(context).primaryTextTheme.button.color,
+                    onPressed: _submit,
+                    color: Colors.teal,
+                    width: 90,
+                    height: 40,
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(30),
+                    // ),
+                    // padding:
+                    //     EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+                    // color: Theme.of(context).primaryColor,
+                    // textColor: Theme.of(context).primaryTextTheme.button.color,
                   ),
                 // ignore: deprecated_member_use
                 FlatButton(
                   child: Text(
-                      '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
+                    '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD',
+                    style: TextStyle(
+                        color: Theme.of(context).accentColor,
+                        fontWeight: FontWeight.bold),
+                  ),
                   onPressed: _switchAuthMode,
                   padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
