@@ -183,8 +183,10 @@ class _AuthCardState extends State<AuthCard>
     _formKey.currentState.save();
     try {
       if (_authMode == AuthMode.Login) {
-        await Provider.of<Auth>(context, listen: false)
-            .login(_authData['email'], _authData['password']);
+        await Provider.of<Auth>(context, listen: false).login(
+          _authData['email'],
+          _authData['password'],
+        );
         print('1111');
 
         Navigator.pushReplacementNamed(context, HomeyScreen.routeName);

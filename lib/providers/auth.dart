@@ -4,7 +4,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:forrira/models/http_exception.dart';
 import 'package:forrira/screens/auth_screen.dart';
+
 import 'package:http/http.dart' as http;
+import 'package:no_context_navigation/no_context_navigation.dart';
 
 class Auth with ChangeNotifier {
   String _token;
@@ -31,7 +33,10 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> _authenticate(
-      String email, String password, String urlSegment) async {
+    String email,
+    String password,
+    String urlSegment,
+  ) async {
     final url =
         'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=AIzaSyB70WBVT2oR6ZtHz5x6FUcRIlRGkgpRYaI';
 
@@ -61,7 +66,7 @@ class Auth with ChangeNotifier {
           ),
         ),
       );
-      //autoLogout();
+      autoLogout();
       notifyListeners();
       // print(isAuth);
       //print('2222');
@@ -74,18 +79,18 @@ class Auth with ChangeNotifier {
     String email,
     String password,
   ) async {
-    return _authenticate(
-      email,
-      password,
-      'signUp',
-    );
+    return _authenticate(email, password, 'signUp');
   }
 
   Future<void> login(
     String email,
     String password,
   ) async {
-    return _authenticate(email, password, 'signInWithPassword');
+    return _authenticate(
+      email,
+      password,
+      'signInWithPassword',
+    );
   }
 
   Future<void> logout() async {
@@ -113,6 +118,11 @@ class Auth with ChangeNotifier {
       _authTimer.cancel();
     }
     final timeExpiry = _expriyDate.difference(DateTime.now()).inSeconds;
-    _authTimer = Timer(Duration(seconds: 10), () => logout);
+    _authTimer = Timer(Duration(seconds: 10), () {
+      logout();
+      //Navigator.pushNamedAndRemoveUntil(ctx, AuthScreen.routeName, (_) => false);
+
+      navService.pushNamedAndRemoveUntil(AuthScreen.routeName);
+    });
   }
 }

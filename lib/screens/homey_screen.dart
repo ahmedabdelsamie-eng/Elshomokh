@@ -94,14 +94,7 @@ class _HomeyScreenState extends State<HomeyScreen> {
                     width: 50,
                   ),
                 ]
-              : [
-                  IconButton(
-                      icon: Icon(Icons.login),
-                      onPressed: () {
-                        Navigator.of(context)
-                            .pushReplacementNamed(AuthScreen.routeName);
-                      })
-                ]),
+              : [IconButton(icon: Icon(Icons.login), onPressed: null)]),
       drawer: AppDrawer(),
       body: _pages[selectedIndex]['page'],
       floatingActionButton: FloatingActionButton(

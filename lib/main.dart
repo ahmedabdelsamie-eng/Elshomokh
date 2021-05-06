@@ -12,6 +12,7 @@ import 'package:forrira/screens/depcons_item_screen.dart';
 import 'package:forrira/screens/dept_contents_screen.dart';
 import 'package:forrira/screens/homey_screen.dart';
 import 'package:forrira/screens/start.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 
 import 'package:provider/provider.dart';
 
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => (MaterialApp(
+          navigatorKey: NavigationService.navigationKey,
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(
