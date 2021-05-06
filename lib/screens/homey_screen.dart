@@ -26,7 +26,10 @@ class _HomeyScreenState extends State<HomeyScreen> {
       {'page': Homey2(), 'title': 'More '}
     ];
 
-    Provider.of<Auth>(context, listen: false).autoLogout(context);
+    // if (Provider.of<Auth>(context, listen: false).isAuth) {
+    //   Provider.of<Auth>(context, listen: false).autoLogout(context);
+    //   print('first time 777777777777777777777');
+    // }
   }
 
   int selectedIndex = 0;

@@ -12,7 +12,6 @@ import 'package:forrira/screens/depcons_item_screen.dart';
 import 'package:forrira/screens/dept_contents_screen.dart';
 import 'package:forrira/screens/homey_screen.dart';
 import 'package:forrira/screens/start.dart';
-import 'package:forrira/screens/visit_screen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -23,6 +22,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('222222222222222222222222222222');
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -49,12 +49,11 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.amber,
             backgroundColor: Colors.orange,
           ),
-          home: Start()
-          //auth.isAuth ? HomeyScreen() : Start()
-          ,
+          home: auth.isAuth ? HomeyScreen() : Start(),
+          //initialRoute: '/',
           routes: {
+            // '/': (ctx) => auth.isAuth ? HomeyScreen() : Start(),
             AuthScreen.routeName: (ctx) => AuthScreen(),
-            VisitScreen.routeName: (ctx) => VisitScreen(),
             HomeyScreen.routeName: (ctx) => HomeyScreen(),
             DeptContentsScreen.routeName: (ctx) => DeptContentsScreen(),
             DeConsItemScreen.routeName: (ctx) => DeConsItemScreen(),

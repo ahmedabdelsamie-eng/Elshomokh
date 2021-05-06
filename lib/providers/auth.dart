@@ -50,8 +50,8 @@ class Auth with ChangeNotifier {
       }
       _token = responseData['idToken'];
 
-      print(responseData['localId']);
-      print(responseData['idToken']);
+      // print(responseData['localId']);
+      // print(responseData['idToken']);
 
       _userId = responseData['localId'];
       _expriyDate = DateTime.now().add(
@@ -61,24 +61,34 @@ class Auth with ChangeNotifier {
           ),
         ),
       );
-
+      //autoLogout();
       notifyListeners();
-      print(isAuth);
-      print('2222');
+      // print(isAuth);
+      //print('2222');
     } catch (error) {
       throw error;
     }
   }
 
-  Future<void> signUP(String email, String password) async {
-    return _authenticate(email, password, 'signUp');
+  Future<void> signUP(
+    String email,
+    String password,
+  ) async {
+    return _authenticate(
+      email,
+      password,
+      'signUp',
+    );
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login(
+    String email,
+    String password,
+  ) async {
     return _authenticate(email, password, 'signInWithPassword');
   }
 
-  Future<void> logout(BuildContext ctx) async {
+  Future<void> logout() async {
     _token = null;
     _userId = null;
     _expriyDate = null;
@@ -87,18 +97,22 @@ class Auth with ChangeNotifier {
       _authTimer = null;
     }
     notifyListeners();
-    Navigator.of(ctx).pushReplacementNamed(AuthScreen.routeName);
+    print('55555555555555555555555');
 
-    // final prefs = await SharedPreferences.getInstance();
+    //  Navigator.of(ctx).pushReplacementNamed(AuthScreen.routeName);
+
+//  Navigator.pushNamedAndRemoveUntil(
+//             context, HomeyScreen.routeName, (_) => false);
+//     // final prefs = await SharedPreferences.getInstance();
     // //prefs.remove('userData);
     // prefs.clear();
   }
 
-  void autoLogout(BuildContext ctx) {
+  void autoLogout() {
     if (_authTimer != null) {
       _authTimer.cancel();
     }
     final timeExpiry = _expriyDate.difference(DateTime.now()).inSeconds;
-    _authTimer = Timer(Duration(seconds: 4), () => logout(ctx));
+    _authTimer = Timer(Duration(seconds: 10), () => logout);
   }
 }

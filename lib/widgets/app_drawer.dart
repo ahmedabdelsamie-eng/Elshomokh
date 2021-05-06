@@ -4,9 +4,15 @@ import 'package:forrira/screens/auth_screen.dart';
 import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
+  void logoutLogic(BuildContext ctx) {
+    Provider.of<Auth>(ctx, listen: false).logout();
+    //  Navigator.of(ctx).pushReplacementNamed(AuthScreen.routeName);
+    // Navigator.pushReplacementNamed(ctx, '/');
+    Navigator.pushNamedAndRemoveUntil(ctx, AuthScreen.routeName, (_) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final authData = Provider.of<Auth>(context, listen: false);
     return Drawer(
       child: Column(
         children: [
@@ -19,8 +25,7 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.exit_to_app),
             title: Text('Logout'),
             onTap: () {
-              authData.logout(context);
-              // Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
+              logoutLogic(context);
             },
           ),
         ],

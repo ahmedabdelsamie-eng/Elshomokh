@@ -170,6 +170,7 @@ class _AuthCardState extends State<AuthCard>
   //   Provider.of<Auth>(ctx).autoLogout();
   //   Navigator.of(ctx).pushReplacementNamed(AuthScreen.routeName);
   // }
+  //
 
   Future<void> _submit() async {
     if (!_formKey.currentState.validate()) {
@@ -186,17 +187,19 @@ class _AuthCardState extends State<AuthCard>
             .login(_authData['email'], _authData['password']);
         print('1111');
 
-        // Navigator.pushReplacementNamed(context, HomeyScreen.routeName);
+        Navigator.pushReplacementNamed(context, HomeyScreen.routeName);
         // Navigator.pushReplacement(
         //     context,
         //     MaterialPageRoute(
         //         builder: (BuildContext context) => HomeyScreen()));
-        Navigator.pushNamedAndRemoveUntil(
-            context, HomeyScreen.routeName, (_) => false);
+        //   Navigator.pushNamedAndRemoveUntil(
+        //       context, HomeyScreen.routeName, (_) => false);
       } else {
-        await Provider.of<Auth>(context, listen: false)
-            .signUP(_authData['email'], _authData['password']);
-        Navigator.of(context).pushReplacementNamed(HomeyScreen.routeName);
+        await Provider.of<Auth>(context, listen: false).signUP(
+          _authData['email'],
+          _authData['password'],
+        );
+        // Navigator.of(context).pushReplacementNamed(HomeyScreen.routeName);
       }
     } on HttpException catch (error) {
       var errorMessage = 'Authentication failed';
