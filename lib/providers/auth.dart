@@ -7,6 +7,7 @@ import 'package:forrira/screens/auth_screen.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:no_context_navigation/no_context_navigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
   String _token;
@@ -68,8 +69,13 @@ class Auth with ChangeNotifier {
       );
       autoLogout();
       notifyListeners();
-      // print(isAuth);
-      //print('2222');
+      final prefs = await SharedPreferences.getInstance();
+      final userData = json.encode({
+        'token': _token,
+        'userId': _userId,
+        'expriyDate': _expriyDate.toIso8601String()
+      });
+      prefs.setString('userData', userData);
     } catch (error) {
       throw error;
     }
@@ -93,6 +99,27 @@ class Auth with ChangeNotifier {
     );
   }
 
+  Future<bool> tryAutoLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('userData')) {
+      return false;
+    }
+    final extractedUserData =
+        jsonDecode(prefs.getString('userData')) as Map<String, Object>;
+    final expiryDate = DateTime.parse(extractedUserData['expriyDate']);
+    if (expiryDate.isBefore(DateTime.now())) {
+      return false;
+    }
+
+    _token = extractedUserData['token'];
+
+    _userId = extractedUserData['token'];
+    _expriyDate = expiryDate;
+    notifyListeners();
+    autoLogout();
+    return true;
+  }
+
   Future<void> logout() async {
     _token = null;
     _userId = null;
@@ -102,15 +129,9 @@ class Auth with ChangeNotifier {
       _authTimer = null;
     }
     notifyListeners();
-    print('55555555555555555555555');
-
-    //  Navigator.of(ctx).pushReplacementNamed(AuthScreen.routeName);
-
-//  Navigator.pushNamedAndRemoveUntil(
-//             context, HomeyScreen.routeName, (_) => false);
-//     // final prefs = await SharedPreferences.getInstance();
-    // //prefs.remove('userData);
-    // prefs.clear();
+    final prefs = await SharedPreferences.getInstance();
+    //prefs.remove('userData);
+    prefs.clear();
   }
 
   void autoLogout() {
@@ -118,7 +139,7 @@ class Auth with ChangeNotifier {
       _authTimer.cancel();
     }
     final timeExpiry = _expriyDate.difference(DateTime.now()).inSeconds;
-    _authTimer = Timer(Duration(seconds: 10), () {
+    _authTimer = Timer(Duration(seconds: timeExpiry), () {
       logout();
       //Navigator.pushNamedAndRemoveUntil(ctx, AuthScreen.routeName, (_) => false);
 

@@ -11,6 +11,7 @@ import 'package:forrira/screens/container4_screen.dart';
 import 'package:forrira/screens/depcons_item_screen.dart';
 import 'package:forrira/screens/dept_contents_screen.dart';
 import 'package:forrira/screens/homey_screen.dart';
+import 'package:forrira/screens/splash_screen.dart';
 import 'package:forrira/screens/start.dart';
 import 'package:no_context_navigation/no_context_navigation.dart';
 
@@ -51,7 +52,16 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.amber,
             backgroundColor: Colors.orange,
           ),
-          home: auth.isAuth ? HomeyScreen() : Start(),
+          home: auth.isAuth
+              ? HomeyScreen()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (ctx, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? SplashScreen()
+                          : Start(),
+                ),
           //initialRoute: '/',
           routes: {
             // '/': (ctx) => auth.isAuth ? HomeyScreen() : Start(),

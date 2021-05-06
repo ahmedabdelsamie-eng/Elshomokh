@@ -4,7 +4,7 @@ class Panner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).accentColor,
+      color: Colors.black38,
       height: 70,
       width: double.infinity,
       child: Row(
@@ -30,7 +30,7 @@ class Panner extends StatelessWidget {
                   ),
                   Text(
                     '3 Hour 40 Minutes',
-                    style: TextStyle(fontSize: 20, color: Colors.teal),
+                    style: TextStyle(fontSize: 20, color: Colors.amber),
                   ),
                 ],
               ),
@@ -57,7 +57,7 @@ class Panner extends StatelessWidget {
                   ),
                   Text(
                     'From 8 To 10',
-                    style: TextStyle(fontSize: 20, color: Colors.teal),
+                    style: TextStyle(fontSize: 20, color: Colors.amber),
                   ),
                 ],
               ),

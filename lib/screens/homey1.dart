@@ -14,7 +14,7 @@ class Homey1 extends StatelessWidget {
           decoration: BoxDecoration(
               color: Colors.teal,
               border: Border.all(
-                color: Colors.amber,
+                color: Colors.pink,
               ),
               borderRadius: BorderRadius.all(Radius.circular(20))),
           width: double.infinity,
